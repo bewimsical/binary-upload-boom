@@ -1,5 +1,6 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
+const Comment = require("../models/Comments");
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -21,7 +22,8 @@ module.exports = {
   getPost: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      res.render("post.ejs", { post: post, user: req.user });
+      const comment = await Comment.find({postId: req.params.id}).sort({ createdAt: "desc" }).lean();
+      res.render("post.ejs", { post: post, user: req.user, comment: comment });
     } catch (err) {
       console.log(err);
     }
@@ -45,6 +47,25 @@ module.exports = {
       console.log(err);
     }
   },
+
+  editPost: async (req, res) =>{
+   try{
+    await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set:{
+          title: req.body.title,
+          caption: req.body.caption
+        }
+      }
+    );
+    console.log("Post Updated");
+    res.redirect(`/post/${req.params.id}`);
+   } catch(err){
+      console.log(err)
+    }
+  },
+
   likePost: async (req, res) => {
     try {
       await Post.findOneAndUpdate(

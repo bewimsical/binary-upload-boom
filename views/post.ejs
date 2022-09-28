@@ -22,6 +22,9 @@
           <button class="btn btn-primary fa fa-trash" type="submit"></button>
         </form>
         <%}%>
+        <%if(post.user == user.id){ %>
+            <a class="btn btn-primary fa fa-pen" href="#editPost"></a>
+          <%}%>
       </div>
     </div>
     <div class="col-3 mt-5">
@@ -32,6 +35,43 @@
       <a class="btn btn-primary" href="/feed">Return to Feed</a>
     </div>
   </div>
+</div>
+<div class="form-group p-5 w-50 mx-auto">
+  <form action="/comment/createComment/<%= post.id %>" method="POST">
+    <div class="mb-3">
+        <label for="comment" class="form-label">Add a Comment</label>
+        <input type="text" class="form-control" id="comment" name="comment">
+    </div>
+    <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+  </form>
+</div>
+
+<ul class="row list-unstyled">
+  <% for(var i=0; i<comment.length; i++) {%>
+    <li class="col-6 justify-content-between mt-5">
+      <%= comment[i].comment%>
+    </li>
+  <% } %>
+</ul>
+
+
+
+<div class="pop-up" id="editPost">
+  <div class="card w-75 px-5 py-3 ">
+    <a href="#" class="close"></a>
+    <form action="/post/editPost/<%= post.id %>?_method=PUT" method="POST">
+      <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title">
+      </div>
+      <div class="mb-3">
+        <label for="caption" class="form-label">Caption</label>
+        <textarea class="form-control" id="caption" name="caption"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+    </form>
+  </div>
+ 
 </div>
 
 <%- include('partials/footer') -%>
