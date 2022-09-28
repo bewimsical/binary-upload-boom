@@ -49,7 +49,9 @@
 <ul class="row list-unstyled">
   <% for(var i=0; i<comment.length; i++) {%>
     <li class="col-6 justify-content-between mt-5">
-      <%= comment[i].comment%>
+      <span class="font-weight-bold"> <%= comment[i].user%></span>: 
+      <span> <%= comment[i].comment%></span>
+     
     </li>
   <% } %>
 </ul>

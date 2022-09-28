@@ -1,4 +1,5 @@
 const Comment = require("../models/Comments");
+const User = require("../models/User");
 
 module.exports = {
     createComment: async (req, res) => {
@@ -7,7 +8,7 @@ module.exports = {
           comment: req.body.comment,
           postId: req.params.id,
           likes: 0,
-          user: req.user.id,
+          user: req.user. userName
         });
         console.log("Comment has been added!");
         res.redirect(`/post/${req.params.id}`);
